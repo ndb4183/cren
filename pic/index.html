@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CREN MLS — Member Resources</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --maroon: #7a1520;
+    --maroon-deep: #4e0c14;
+    --maroon-mid: #9a2430;
+    --ink: #1c1917;
+    --muted: #57534e;
+    --line: #e7e5e4;
+    --line-strong: #d6d3d1;
+    --surface: #ffffff;
+    --surface-soft: #fafaf9;
+    --pad: clamp(1.15rem, 3.5vw, 2.5rem);
+    --max: 72rem;
+    --font: "Libre Franklin", system-ui, sans-serif;
+    --display: "Source Serif 4", Georgia, serif;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    font-family: var(--font);
+    font-size: 0.975rem;
+    line-height: 1.55;
+    color: var(--ink);
+    background: var(--surface);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: var(--maroon);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+  }
+
+  a:hover { color: var(--maroon-deep); }
+
+  img { max-width: 100%; height: auto; display: block; }
+
+  .wrap {
+    width: min(100% - (var(--pad) * 2), var(--max));
+    margin-inline: auto;
+  }
+
+  /* —— Primary actions —— */
+  .primary {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0.65rem;
+    padding: 1rem 0 0.25rem;
+    animation: rise 0.65s var(--ease) 0.06s both;
+  }
+
+  .primary a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 3rem;
+    padding: 0.65rem 0.9rem;
+    background: var(--maroon);
+    color: #fff;
+    font-size: 0.88rem;
+    font-weight: 700;
+    text-align: center;
+    text-decoration: none;
+    border-radius: 4px;
+    transition: background 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+
+  .primary a:hover {
+    background: var(--maroon-deep);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .primary a.secondary {
+    background: var(--surface);
+    color: var(--maroon);
+    border: 1.5px solid var(--maroon);
+  }
+
+  .primary a.secondary:hover {
+    background: var(--maroon);
+    color: #fff;
+  }
+
+  /* —— Section nav —— */
+  .jump {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem 0.35rem;
+    padding: 1.15rem 0 1.5rem;
+    border-bottom: 1px solid var(--line);
+    animation: rise 0.65s var(--ease) 0.1s both;
+  }
+
+  .jump a {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    background: var(--surface-soft);
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+  }
+
+  .jump a:hover {
+    color: var(--maroon);
+    border-color: var(--maroon-mid);
+    background: #fff;
+  }
+
+  /* —— Layout —— */
+  .content {
+    display: grid;
+    gap: 2.25rem;
+    padding: 2rem 0 3.5rem;
+    animation: rise 0.65s var(--ease) 0.14s both;
+  }
+
+  @media (min-width: 960px) {
+    .content {
+      grid-template-columns: minmax(0, 1.65fr) minmax(16rem, 0.85fr);
+      gap: 2.5rem;
+      align-items: start;
+    }
+  }
+
+  .main { display: flex; flex-direction: column; gap: 2.25rem; min-width: 0; }
+
+  .aside {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  @media (min-width: 960px) {
+    .aside { position: sticky; top: 1rem; }
+  }
+
+  /* —— Sections —— */
+  section.block {
+    scroll-margin-top: 1rem;
+  }
+
+  .block-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+    margin-bottom: 0.9rem;
+    padding-bottom: 0.55rem;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .block-head h2 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+  }
+
+  .block-head .hint {
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  /* Listing skills / training topics */
+  .skill-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(16.5rem, 1fr));
+    gap: 1rem;
+  }
+
+  .skill {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  }
+
+  .skill:hover {
+    border-color: var(--maroon);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(28, 25, 23, 0.08);
+    color: inherit;
+  }
+
+  .skill-photo {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    background: #d6d3d1 center / cover no-repeat;
+    filter: saturate(1.12) contrast(1.04);
+  }
+
+  .skill-photo .badge {
+    position: absolute;
+    top: 0.65rem;
+    left: 0.65rem;
+    padding: 0.2rem 0.5rem;
+    background: var(--maroon);
+    color: #fff;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    border-radius: 3px;
+  }
+
+  .skill-body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    padding: 0.95rem 1rem 1.1rem;
+    flex: 1;
+  }
+
+  .skill h3 {
+    margin: 0;
+    font-family: var(--display);
+    font-size: 1.12rem;
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+
+  .skill p {
+    margin: 0;
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: var(--muted);
+    flex: 1;
+  }
+
+  .skill .skill-cta {
+    margin-top: 0.15rem;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--maroon);
+  }
+
+  .skill:hover .skill-cta {
+    text-decoration: underline;
+  }
+
+  /* Resource tiles */
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(14.5rem, 1fr));
+    gap: 0.65rem;
+  }
+
+  .tile {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    padding: 0.95rem 1rem;
+    background: var(--surface-soft);
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s var(--ease), background 0.2s var(--ease), transform 0.2s var(--ease);
+  }
+
+  .tile:hover {
+    border-color: var(--maroon);
+    background: #fff;
+    transform: translateY(-2px);
+    color: inherit;
+  }
+
+  .tile strong {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+
+  .tile span {
+    font-size: 0.8rem;
+    color: var(--muted);
+    line-height: 1.4;
+  }
+
+  .tile.accent {
+    background: var(--maroon);
+    border-color: var(--maroon);
+    color: #fff;
+  }
+
+  .tile.accent strong,
+  .tile.accent span { color: #fff; }
+
+  .tile.accent:hover {
+    background: var(--maroon-deep);
+    border-color: var(--maroon-deep);
+    color: #fff;
+  }
+
+  /* Link lists */
+  .link-rows {
+    display: grid;
+    gap: 0;
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .link-rows a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: var(--ink);
+    font-weight: 550;
+    font-size: 0.92rem;
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+    transition: background 0.15s, color 0.15s;
+  }
+
+  .link-rows a:last-child { border-bottom: none; }
+
+  .link-rows a:hover {
+    background: var(--surface-soft);
+    color: var(--maroon);
+  }
+
+  .link-rows a::after {
+    content: "→";
+    color: var(--maroon);
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+
+  /* Tool groups */
+  .tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    gap: 1rem;
+  }
+
+  .tool {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1rem 1.05rem 1.05rem;
+    background: #fff;
+  }
+
+  .tool h3 {
+    margin: 0 0 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    color: var(--maroon);
+  }
+
+  .tool ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+
+  .tool a {
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  .tool a:hover { text-decoration: underline; }
+
+  /* Assessor grid */
+  .assessor-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(11.5rem, 1fr));
+    gap: 0.35rem 0.75rem;
+  }
+
+  .assessor-grid a {
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0.35rem 0;
+    border-bottom: 1px solid transparent;
+  }
+
+  .assessor-grid a:hover {
+    border-bottom-color: var(--maroon);
+  }
+
+  /* Aside cards */
+  .card {
+    border: 1px solid var(--line);
+    border-radius: 4px;
+    padding: 1.1rem 1.15rem;
+    background: var(--surface-soft);
+  }
+
+  .card h2 {
+    margin: 0 0 0.75rem;
+    font-family: var(--display);
+    font-size: 1.15rem;
+    font-weight: 700;
+  }
+
+  .card ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  .card a {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-decoration: none;
+  }
+
+  .card a:hover { text-decoration: underline; }
+
+  .card .note {
+    margin: 0.85rem 0 0;
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.45;
+  }
+
+  .notice {
+    border-left: 3px solid var(--maroon);
+    background: #fff;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--maroon);
+    border-radius: 0 4px 4px 0;
+    padding: 0.95rem 1rem;
+  }
+
+  .notice h3 {
+    margin: 0 0 0.35rem;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--maroon);
+  }
+
+  .notice p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+
+  .notice a { font-weight: 700; text-decoration: none; }
+  .notice a:hover { text-decoration: underline; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 1.25rem 0 2rem;
+    font-size: 0.82rem;
+    color: var(--muted);
+  }
+
+  footer .wrap {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+  }
+
+  footer a {
+    color: var(--maroon);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  footer a:hover { text-decoration: underline; }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <div class="wrap">
+    <nav class="primary" aria-label="Key member actions">
+      <a href="http://www.mycrendashboard.com/" target="_blank" rel="noopener">CREN Dashboard</a>
+      <a href="https://ams.navicamls.net/" target="_blank" rel="noopener noreferrer">Pay MLS Dues</a>
+      <a class="secondary" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:4f9018dd-c6e0-422a-b1c2-acadd93f039a" target="_blank" rel="noopener">Fee Schedule</a>
+      <a class="secondary" href="https://www.cognitoforms.com/CRENMLS1/SOLDOFFMARKETLISTINGFORM" target="_blank" rel="noopener">Off-Market Listings</a>
+      <a class="secondary" href="mailto:support@crenmls.com">Contact Support</a>
+    </nav>
+
+    <nav class="jump" aria-label="Page sections">
+      <a href="#features">Feature Videos</a>
+      <a href="#essentials">Essentials</a>
+      <a href="#rules">Rules &amp; Reference</a>
+      <a href="#training">Training</a>
+      <a href="#tools">Software Tools</a>
+      <a href="#assessors">Assessor Sites</a>
+      <a href="#industry">Industry Links</a>
+    </nav>
+
+    <div class="content">
+      <div class="main">
+        <section class="block" id="features">
+          <div class="block-head">
+            <h2>Check Out These Features</h2>
+            <span class="hint">Short intro videos to tools you can use today</span>
+          </div>
+          <div class="skill-grid">
+            <a class="skill" href="https://vimeo.com/905696199" target="_blank" rel="noopener">
+              <div class="skill-photo" style="background-image: url('images/training-easycma.jpg');">
+                <span class="badge">Video</span>
+              </div>
+              <div class="skill-body">
+                <h3>EasyCMA</h3>
+                <p>See how EasyCMA helps you build a clear, client-ready comparative market analysis—pick comps, review adjustments, and present pricing with confidence.</p>
+                <span class="skill-cta">Watch intro video →</span>
+              </div>
+            </a>
+            <a class="skill" href="https://vimeo.com/1097558708" target="_blank" rel="noopener">
+              <div class="skill-photo" style="background-image: url('images/training-reverse-prospecting.jpg');">
+                <span class="badge">Video</span>
+              </div>
+              <div class="skill-body">
+                <h3>Reverse Prospecting</h3>
+                <p>Discover how reverse prospecting connects your listing to buyer agents already searching similar criteria—so the right people see it sooner.</p>
+                <span class="skill-cta">Watch intro video →</span>
+              </div>
+            </a>
+            <a class="skill" href="https://vimeo.com/1115828558" target="_blank" rel="noopener">
+              <div class="skill-photo" style="background-image: url('images/training-input-listings.jpg');">
+                <span class="badge">Video</span>
+              </div>
+              <div class="skill-body">
+                <h3>Listing Maintenance</h3>
+                <p>A quick look at keeping listings current—status updates, changes, and everyday maintenance that keeps your inventory accurate and compliant.</p>
+                <span class="skill-cta">Watch intro video →</span>
+              </div>
+            </a>
+            <a class="skill" href="https://vimeo.com/905696230" target="_blank" rel="noopener">
+              <div class="skill-photo" style="background-image: url('images/training-upload-photos.jpg');">
+                <span class="badge">Video</span>
+              </div>
+              <div class="skill-body">
+                <h3>NearMe</h3>
+                <p>Explore NearMe and find what’s close by—properties and activity around a location so you can work the neighborhood with less digging.</p>
+                <span class="skill-cta">Watch intro video →</span>
+              </div>
+            </a>
+          </div>
+        </section>
+
+
+        <section class="block" id="essentials">
+          <div class="block-head">
+            <h2>Member Essentials</h2>
+            <span class="hint">Billing, forms, and daily use</span>
+          </div>
+          <div class="tiles">
+            <a class="tile accent" href="http://www.mycrendashboard.com/" target="_blank" rel="noopener">
+              <strong>CREN Dashboard</strong>
+              <span>Bookmark and log in for market updates</span>
+            </a>
+            <a class="tile" href="https://ams.navicamls.net/" target="_blank" rel="noopener noreferrer">
+              <strong>Pay MLS Dues</strong>
+              <span>Navica AMS billing portal</span>
+            </a>
+            <a class="tile" href="https://acrobat.adobe.com/id/urn:aaid:sc:US:4f9018dd-c6e0-422a-b1c2-acadd93f039a" target="_blank" rel="noopener">
+              <strong>Fee Schedule</strong>
+              <span>Current CREN MLS fees</span>
+            </a>
+            <a class="tile" href="https://netorg458725-my.sharepoint.com/shared?listurl=https%3A%2F%2Fnetorg458725%2Dmy%2Esharepoint%2Ecom%2Fpersonal%2Fjeff%5Fcrenmls%5Fcom%2FDocuments&amp;id=%2Fpersonal%2Fjeff%5Fcrenmls%5Fcom%2FDocuments%2FMain%20Office%20Share%2FBen%2FNew%20Members%20Packet%20%26%20Toolbox%2FCREN%20Toolbox%2Epdf&amp;parent=%2Fpersonal%2Fjeff%5Fcrenmls%5Fcom%2FDocuments%2FMain%20Office%20Share%2FBen%2FNew%20Members%20Packet%20%26%20Toolbox&amp;shareLink=1&amp;ga=1" target="_blank" rel="noopener">
+              <strong>CREN Toolbox</strong>
+              <span>New member packet &amp; tools PDF</span>
+            </a>
+            <a class="tile" href="http://cren.paragonrels.com/CCR/paragonsubscriptions?action=optin&amp;oid=c80f8a7d-c09e-4561-a091-435e183869c5" target="_blank" rel="noopener">
+              <strong>Email Notification Opt-In</strong>
+              <span>Manage Paragon subscription emails</span>
+            </a>
+            <a class="tile" href="https://www.crenmls.com/join" target="_blank" rel="noopener">
+              <strong>Change Request</strong>
+              <span>Submit membership or office changes</span>
+            </a>
+            <a class="tile" href="https://www.cognitoforms.com/CRENMLS1/SOLDOFFMARKETLISTINGFORM" target="_blank" rel="noopener">
+              <strong>Off-Market Listings</strong>
+              <span>Sold / off-market listing form</span>
+            </a>
+            <a class="tile" href="https://cren-public.stats.showingtime.com/reports" target="_blank" rel="noopener noreferrer">
+              <strong>10K Statistics</strong>
+              <span>Area market statistics reports</span>
+            </a>
+          </div>
+        </section>
+
+
+
+        <section class="block" id="rules">
+          <div class="block-head">
+            <h2>Rules &amp; Reference</h2>
+            <span class="hint">MLS standards and definitions</span>
+          </div>
+          <div class="link-rows">
+            <a href="https://acrobat.adobe.com/id/urn:aaid:sc:US:d3394bd4-5a45-427a-8149-376e2f9521e3" target="_blank" rel="noopener">Rules and Regulations</a>
+            <a href="https://netorg458725-my.sharepoint.com/:b:/g/personal/jeff_crenmls_com/ER9QDqroIUJAlGM55_VweCMBJ_FOyLv3cEUu1kTPc7soGA?e=jpaOWK" target="_blank" rel="noopener">Class Definitions</a>
+            <a href="https://acrobat.adobe.com/id/urn:aaid:sc:US:f9794b46-ac1f-414a-a884-165f80321d2a" target="_blank" rel="noopener">Status Definitions</a>
+            <a href="https://conta.cc/4i9YLeO" target="_blank" rel="noopener">Latest Newsletter</a>
+          </div>
+        </section>
+
+        <section class="block" id="training">
+          <div class="block-head">
+            <h2>Training &amp; Webinars</h2>
+            <span class="hint">Live sessions and recorded content</span>
+          </div>
+          <div class="tiles">
+            <a class="tile" href="https://docs.google.com/forms/d/e/1FAIpQLSeNTUR7g7F-NrrzKLg9xhl8pfRcXBRZ4t_g99_GQtK89QNOdw/viewform?usp=dialog" target="_blank" rel="noopener">
+              <strong>Weekly Training Webinars</strong>
+              <span>Register for upcoming CREN training</span>
+            </a>
+            <a class="tile" href="https://www.youtube.com/watch?v=-F4jS3V9B8Y" target="_blank" rel="noopener">
+              <strong>Coffee with CREN</strong>
+              <span>Convert a subject property to active</span>
+            </a>
+            <a class="tile" href="https://youtu.be/RJxqD1Zqe5A" target="_blank" rel="noopener">
+              <strong>Support Spotlight</strong>
+              <span>This week’s support tip video</span>
+            </a>
+            <a class="tile" href="https://www.youtube.com/@Crenmls1600/playlists" target="_blank" rel="noopener">
+              <strong>YouTube Library</strong>
+              <span>Recorded trainings &amp; playlists</span>
+            </a>
+          </div>
+          <div class="block-head" style="margin-top: 1.5rem;">
+            <h2 style="font-size: 1.1rem;">Upcoming free webinars</h2>
+          </div>
+          <div class="link-rows">
+            <a href="https://www.forewarn.com/training-webinars/?utm_campaign=Training%20Webinars&amp;utm_medium=email&amp;_hsenc=p2ANqtz-8KLLJbBae0kf2j_UTzEbGwl3YEUeDdP8jx5aMA7BbD0pQifGE11ZXk6S4nFBwP80yd79-lqYBO1dKuPpk-62mAziKF8w&amp;_hsmi=441448588&amp;utm_content=441448588&amp;utm_source=hs_email" target="_blank" rel="noopener">Forewarn Training Webinars</a>
+            <a href="https://docs.google.com/forms/d/1sPK5DKTLUaJKP5Z_SmgIjd0VrDrwJH-Q91vA0kFn5u8/edit" target="_blank" rel="noopener">CREN Webinar Signup Form</a>
+            <a href="https://events.zoom.us/ev/AniHsWEsLr-9SL6NdY1Ohp-0lOUo4lJGF3GKYRGXe_Brjfk2BT2V~AnTR0tH6A3QPTMuztYpY5Na9sj4kbuMf3WcJBQV5Y9GKOtSK_DavilhXDRspNolaJKQvSlXk_G4GgV7DwZ_qfWx6zw" target="_blank" rel="noopener">Zoom Event Registration</a>
+            <a href="https://us06web.zoom.us/meeting/register/IRsdsXhTQgCPXJHGGi4emw#/registration" target="_blank" rel="noopener">Real Estate Sales Funnel Webinar</a>
+          </div>
+        </section>
+
+        <section class="block" id="tools">
+          <div class="block-head">
+            <h2>Software Integrations</h2>
+            <span class="hint">Login, support, and training</span>
+          </div>
+          <div class="tool-grid">
+            <div class="tool">
+              <h3>Instanet</h3>
+              <ul>
+                <li><a href="https://www.youtube.com/user/InstanetWebinars/featured" target="_blank" rel="noopener noreferrer">Training Videos</a></li>
+                <li><a href="https://calendly.com/instanet_training" target="_blank" rel="noopener noreferrer">Private Training Setup</a></li>
+                <li><a href="http://www.instanetsolutions.com/support/" target="_blank" rel="noopener noreferrer">Support</a></li>
+                <li><a href="http://vimeopro.com/user18881949/all-our-videos" target="_blank" rel="noopener noreferrer">Pre-Recorded Webinars</a></li>
+              </ul>
+            </div>
+            <div class="tool">
+              <h3>RPR</h3>
+              <ul>
+                <li><a href="https://blog.narrpr.com/helpdesk/" target="_blank" rel="noopener noreferrer">Learn to Use RPR</a></li>
+                <li><a href="https://www.narrpr.com/" target="_blank" rel="noopener noreferrer">New Account / Login</a></li>
+                <li><a href="http://blog.narrpr.com/" target="_blank" rel="noopener noreferrer">RPR Blog</a></li>
+                <li><a href="http://support.narrpr.com/forums" target="_blank" rel="noopener noreferrer">Help Desk</a></li>
+              </ul>
+            </div>
+            <div class="tool">
+              <h3>ShowingTime</h3>
+              <ul>
+                <li><a href="https://showingtimemls.uservoice.com/" target="_blank" rel="noopener noreferrer">Help &amp; Training</a></li>
+                <li><a href="http://www.showingtime.com/support" target="_blank" rel="noopener noreferrer">Support</a></li>
+                <li><a href="https://www.youtube.com/playlist?list=PLipM5NSWjfOkbxWmpZls5ACqLj3ThmAZ8" target="_blank" rel="noopener noreferrer">CREN Tutorial Videos</a></li>
+                <li><a href="http://www.showingtime.com/training" target="_blank" rel="noopener noreferrer">Schedule Online Training</a></li>
+              </ul>
+            </div>
+            <div class="tool">
+              <h3>ListHub</h3>
+              <ul>
+                <li><a href="https://app.listhub.com/accounts/login.action" target="_blank" rel="noopener noreferrer">Login</a></li>
+                <li><a href="https://app.listhub.com/accounts/register.action" target="_blank" rel="noopener noreferrer">Registration</a></li>
+                <li><a href="https://www.listhub.com/support/" target="_blank" rel="noopener noreferrer">Support</a></li>
+                <li><a href="http://www.listhub.net/training.html" target="_blank" rel="noopener noreferrer">Training</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+
+
+
+        <section class="block" id="assessors">
+          <div class="block-head">
+            <h2>County Assessor Sites</h2>
+            <span class="hint">Property search by county</span>
+          </div>
+          <div class="assessor-grid">
+            <a title="Alamosa County Assessor Data" href="https://qpublic.schneidercorp.com/Application.aspx?App=AlamosaCountyCO&amp;PageType=Search" target="_blank" rel="noopener">Alamosa County</a>
+            <a title="Archuleta County Assessor Data" href="https://archuleta.infoenvoy.com/Search" target="_blank" rel="noopener">Archuleta County</a>
+            <a title="Conejos County Property Search" href="https://qpublic.schneidercorp.com/Application.aspx?AppID=1217&amp;LayerID=36995&amp;PageTypeID=2&amp;PageID=14172&amp;KeyValue=613701100003" target="_blank" rel="noopener">Conejos County</a>
+            <a title="Costilla County Property Search" href="http://costilla-assessor-tyler.obus.io/assessor/taxweb/search.jsp" target="_blank" rel="noopener">Costilla County</a>
+            <a title="Costilla County GIS" href="https://portico.mygisonline.com/html5/costillaco/" target="_blank" rel="noopener">Costilla County GIS</a>
+            <a title="Delta County Eagle Web" href="https://assessor.deltacountyco.gov/assessor/web/" target="_blank" rel="noopener">Delta County</a>
+            <a title="Dolores County Map Viewer" href="https://dolorescounty.maps.arcgis.com/apps/webappviewer/index.html?id=13332f82511942a7a123161eada864ca" target="_blank" rel="noopener">Dolores County</a>
+            <a title="Garfield Assessor" href="https://www.garfieldcountyco.gov/assessor/" target="_blank" rel="noopener">Garfield County</a>
+            <a title="Gunnison County Property Search" href="https://property.spatialest.com/co/gunnison#/" target="_blank" rel="noopener">Gunnison County</a>
+            <a title="Hinsdale County Property Search" href="https://tyler.hinsdalecountycolorado.us:8444/assessor/web/login.jsp" target="_blank" rel="noopener">Hinsdale County</a>
+            <a title="La Plata Eagle Web" href="https://eagleweb.lpcgov.org/assessor/web/" target="_blank" rel="noopener">La Plata County</a>
+            <a title="Las Animas Eagle Web" href="http://assessorweb.lasanimascounty.net:8080/assessor/web/" target="_blank" rel="noopener">Las Animas County</a>
+            <a title="Mesa County Assessor Lookup" href="https://emap.mesacounty.us/Assessor_Lookup/" target="_blank" rel="noopener">Mesa County</a>
+            <a title="Montezuma County Eagle Web" href="https://eagleweb.co.montezuma.co.us:8443/assessor/web/" target="_blank" rel="noopener">Montezuma County</a>
+            <a title="Montrose County Eagle Web" href="http://eagleweb.montrosecounty.net/eagleassessor/web/" target="_blank" rel="noopener">Montrose County</a>
+            <a title="Ouray County Eagle Web" href="https://ouraycountyco-assessor.tylerhost.net/assessor/web/login.jsp?submit=Enter+EagleWeb" target="_blank" rel="noopener">Ouray County</a>
+            <a title="Rio Grande Eagle Web" href="https://riograndecountyco-assessor.tylerhost.net/assessor/web/splash.jsp" target="_blank" rel="noopener">Rio Grande County</a>
+            <a title="Saguache County EagleWeb" href="https://saguachecountyco-assessor.tylerhost.net/assessor/web/" target="_blank" rel="noopener">Saguache County</a>
+            <a title="San Juan County Property Search" href="https://sanjuanco-search.gsacorp.io/search" target="_blank" rel="noopener">San Juan County</a>
+            <a title="San Miguel County Property Search" href="https://sanmiguel.infoenvoy.com/search" target="_blank" rel="noopener">San Miguel County</a>
+          </div>
+        </section>
+
+        <section class="block" id="industry">
+          <div class="block-head">
+            <h2>State &amp; National Resources</h2>
+          </div>
+          <div class="tool-grid">
+            <div class="tool">
+              <h3>Colorado</h3>
+              <ul>
+                <li><a href="http://water.state.co.us/Home/Pages/default.aspx" target="_blank" rel="noopener noreferrer">CO Div. of Water</a></li>
+                <li><a href="https://www.colorado.gov/dora/node/95946" target="_blank" rel="noopener noreferrer">CREC Manual</a></li>
+                <li><a href="https://www.colorado.gov/dora/division-real-estate" target="_blank" rel="noopener noreferrer">CREC</a></li>
+                <li><a href="http://coloradorealtors.com/" target="_blank" rel="noopener noreferrer">CAR</a></li>
+                <li><a href="http://www.coloradorealtors.com/legal-hotline/" target="_blank" rel="noopener noreferrer">CAR Legal Hotline</a></li>
+                <li><a href="https://content.govdelivery.com/accounts/CODORA/bulletins/42d6e0e" target="_blank" rel="noopener">DORA Bulletin</a></li>
+              </ul>
+            </div>
+            <div class="tool">
+              <h3>NAR</h3>
+              <ul>
+                <li><a href="http://www.realtor.org/" target="_blank" rel="noopener noreferrer">NAR Homepage</a></li>
+                <li><a href="http://www.realtor.org/governance/governing-documents/the-code-of-ethics" target="_blank" rel="noopener noreferrer">Code of Ethics</a></li>
+                <li><a href="http://www.realtor.org/logos-and-trademark-rules" target="_blank" rel="noopener noreferrer">Logos &amp; Trademark Rules</a></li>
+                <li><a href="http://www.realtor.org/logos-and-trademark-rules/logo-trademark-faq" target="_blank" rel="noopener noreferrer">Logo &amp; Trademark FAQ</a></li>
+              </ul>
+            </div>
+            <div class="tool">
+              <h3>Social</h3>
+              <ul>
+                <li><a href="https://www.youtube.com/@Crenmls1600/playlists" target="_blank" rel="noopener">YouTube</a></li>
+                <li><a href="https://www.facebook.com/crenmls" target="_blank" rel="noopener">Facebook</a></li>
+                <li><a href="https://conta.cc/4i9YLeO" target="_blank" rel="noopener">Newsletter</a></li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+      <aside class="aside">
+        <div class="notice">
+          <h3>Reminder</h3>
+          <p>Bookmark and use the <a href="http://www.mycrendashboard.com/" target="_blank" rel="noopener">CREN Dashboard</a> for weekly updates and market information.</p>
+        </div>
+
+        <div class="card">
+          <h2>Need help?</h2>
+          <ul>
+            <li><a href="mailto:support@crenmls.com">Email support</a></li>
+            <li><a href="tel:9702401600">Call (970) 240-1600</a></li>
+            <li><a href="https://www.crenmls.com/join" target="_blank" rel="noopener">Submit a change request</a></li>
+          </ul>
+          <p class="note">Office hours: Monday–Friday, 8:00am–5:00pm.</p>
+        </div>
+
+        <div class="card">
+          <h2>Quick links</h2>
+          <ul>
+            <li><a href="https://ams.navicamls.net/" target="_blank" rel="noopener noreferrer">Pay dues</a></li>
+            <li><a href="https://acrobat.adobe.com/id/urn:aaid:sc:US:d3394bd4-5a45-427a-8149-376e2f9521e3" target="_blank" rel="noopener">Rules &amp; Regulations</a></li>
+            <li><a href="https://docs.google.com/forms/d/e/1FAIpQLSeNTUR7g7F-NrrzKLg9xhl8pfRcXBRZ4t_g99_GQtK89QNOdw/viewform?usp=dialog" target="_blank" rel="noopener">Training webinars</a></li>
+            <li><a href="https://www.cognitoforms.com/CRENMLS1/SOLDOFFMARKETLISTINGFORM" target="_blank" rel="noopener">Off-market form</a></li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <footer>
+    <div class="wrap">
+      <span>© CREN Integrated Solutions · Making the Market Work®</span>
+      <span><a href="mailto:support@crenmls.com">support@crenmls.com</a> · <a href="tel:9702401600">(970) 240-1600</a></span>
+    </div>
+  </footer>
+
+</body>
+</html>
